@@ -1,0 +1,156 @@
+#include <iostream>
+using namespace std;
+
+// Function to display addresses of each character in a string
+void showAddress(char* str) {
+    while (*str) {
+        cout << "Character: " << *str << " Address: " << (void*)str << endl;
+        str++;
+    }
+}
+
+// Function to concatenate two strings
+void concatenate(char* str1, char* str2, char* result) {
+    while (*str1) {
+        *result++ = *str1++;
+    }
+    while (*str2) {
+        *result++ = *str2++;
+    }
+    *result = '\0';
+}
+
+// Function to compare two strings
+int compareStrings(char* str1, char* str2) {
+    while (*str1 && *str2) {
+        if (*str1 != *str2) return (*str1 - *str2);
+        str1++, str2++;
+    }
+    return (*str1 - *str2);
+}
+
+// Function to calculate length of string
+int stringLength(char* str) {
+    int length = 0;
+    while (*str++) length++;
+    return length;
+}
+
+// Function to convert lowercase to uppercase
+void toUpperCase(char* str) {
+    while (*str) {
+        if (*str >= 'a' && *str <= 'z') {
+            *str -= 32;
+        }
+        str++;
+    }
+}
+
+// Function to reverse a string
+void reverseString(char* str) {
+    int len = stringLength(str);
+    for (int i = 0; i < len / 2; i++) {
+        char temp = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = temp;
+    }
+}
+
+// Function to insert one string into another at a given position
+void insertString(char* str1, char* str2, int pos, char* result) {
+    int i = 0, j = 0;
+    while (i < pos) {
+        result[i] = str1[i];
+        i++;
+    }
+    while (*str2) {
+        result[i++] = *str2++;
+    }
+    while (str1[j]) {
+        result[i++] = str1[pos + j];
+        j++;
+    }
+    result[i] = '\0';
+}
+
+int main() {
+    int choice;
+    char str1[100], str2[100], result[200];
+    
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Show address of each character in string" << endl;
+        cout << "2. Concatenate two strings" << endl;
+        cout << "3. Compare two strings" << endl;
+        cout << "4. Calculate length of the string" << endl;
+        cout << "5. Convert all lowercase characters to uppercase" << endl;
+        cout << "6. Reverse the string" << endl;
+        cout << "7. Insert a string in another string at a specified position" << endl;
+        cout << "8. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+        cin.ignore();
+        
+        switch (choice) {
+            case 1:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                showAddress(str1);
+                break;
+            case 2:
+                cout << "Enter first string: ";
+                cin.getline(str1, 100);
+                cout << "Enter second string: ";
+                cin.getline(str2, 100);
+                concatenate(str1, str2, result);
+                cout << "Concatenated String: " << result << endl;
+                break;
+            case 3:
+                cout << "Enter first string: ";
+                cin.getline(str1, 100);
+                cout << "Enter second string: ";
+                cin.getline(str2, 100);
+                if (compareStrings(str1, str2) == 0)
+                    cout << "Strings are equal." << endl;
+                else
+                    cout << "Strings are not equal." << endl;
+                break;
+            case 4:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                cout << "Length of string: " << stringLength(str1) << endl;
+                break;
+            case 5:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                toUpperCase(str1);
+                cout << "Uppercase String: " << str1 << endl;
+                break;
+            case 6:
+                cout << "Enter a string: ";
+                cin.getline(str1, 100);
+                reverseString(str1);
+                cout << "Reversed String: " << str1 << endl;
+                break;
+            case 7:
+                cout << "Enter main string: ";
+                cin.getline(str1, 100);
+                cout << "Enter string to insert: ";
+                cin.getline(str2, 100);
+                int pos;
+                cout << "Enter position to insert: ";
+                cin >> pos;
+                cin.ignore();
+                insertString(str1, str2, pos, result);
+                cout << "String after insertion: " << result << endl;
+                break;
+            case 8:
+                cout << "Exiting..." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please enter again." << endl;
+        }
+    } while (choice != 8);
+    
+    return 0;
+}
