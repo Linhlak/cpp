@@ -1,0 +1,41 @@
+#include <iostream>
+#include <cstdlib> // For atoi
+using namespace std;
+
+// Function to calculate factorial
+long long factorial(int num) {
+    long long fact = 1;
+    for (int i = 2; i <= num; ++i) {
+        fact *= i;
+    }
+    return fact;
+}
+
+int main(int argc, char* argv[]) {
+    int n;
+    
+    // Check if command line argument is provided
+    if (argc > 1) {
+        n = atoi(argv[1]); // Convert argument to integer
+    } else {
+        // Prompt user for input
+        cout << "Enter the number of terms (n): ";
+        cin >> n;
+    }
+    
+    if (n <= 0) {
+        cout << "Please enter a positive integer." << endl;
+        return 1;
+    }
+    
+    double sum = 0.0;
+    
+    // Compute sum of series
+    for (int i = 1; i <= n; ++i) {
+        sum += (i % 2 == 0 ? -1.0 : 1.0) / factorial(i);
+    }
+    
+    cout << "Sum of the series for " << n << " terms: " << sum << endl;
+    
+    return 0;
+}
