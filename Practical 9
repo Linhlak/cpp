@@ -1,0 +1,56 @@
+#include <iostream>
+using namespace std;
+
+// Base class Person
+class Person {
+protected:
+    string name;
+public:
+    Person(string n) : name(n) {}
+    virtual void display() { // Virtual function for runtime polymorphism
+        cout << "Name: " << name << endl;
+    }
+    virtual ~Person() {}
+};
+
+// Derived class Student
+class Student : public Person {
+private:
+    string course;
+    int marks;
+    int year;
+public:
+    Student(string n, string c, int m, int y) : Person(n), course(c), marks(m), year(y) {}
+    void display() override {
+        cout << "Student Details:\n";
+        cout << "Name: " << name << "\nCourse: " << course << "\nMarks: " << marks << "\nYear: " << year << endl;
+    }
+};
+
+// Derived class Employee
+class Employee : public Person {
+private:
+    string department;
+    double salary;
+public:
+    Employee(string n, string dept, double sal) : Person(n), department(dept), salary(sal) {}
+    void display() override {
+        cout << "Employee Details:\n";
+        cout << "Name: " << name << "\nDepartment: " << department << "\nSalary: " << salary << endl;
+    }
+};
+
+int main() {
+    Person *p1 = new Student("Alice", "Computer Science", 85, 2024);
+    Person *p2 = new Employee("Bob", "HR", 50000);
+    
+    cout << "\nDisplaying Student Details:" << endl;
+    p1->display();
+    
+    cout << "\nDisplaying Employee Details:" << endl;
+    p2->display();
+    
+    delete p1;
+    delete p2;
+    return 0;
+}
