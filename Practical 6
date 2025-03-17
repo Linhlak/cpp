@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Recursive Binary Search Function
+int binarySearchRecursive(const vector<int>& arr, int left, int right, int target) {
+    if (left > right) {
+        return -1;
+    }
+    int mid = left + (right - left) / 2;
+    if (arr[mid] == target) {
+        return mid;
+    } else if (arr[mid] > target) {
+        return binarySearchRecursive(arr, left, mid - 1, target);
+    } else {
+        return binarySearchRecursive(arr, mid + 1, right, target);
+    }
+}
+
+// Iterative Binary Search Function
+int binarySearchIterative(const vector<int>& arr, int target) {
+    int left = 0, right = arr.size() - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) {
+            return mid;
+        } else if (arr[mid] > target) {
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int n, target;
+    cout << "Enter the number of elements: ";
+    cin >> n;
+    
+    vector<int> arr(n);
+    cout << "Enter " << n << " sorted elements: ";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    
+    cout << "Enter the element to search: ";
+    cin >> target;
+    
+    // Recursive Search
+    int indexRecursive = binarySearchRecursive(arr, 0, n - 1, target);
+    cout << "Recursive Binary Search: ";
+    if (indexRecursive != -1) {
+        cout << "Element found at index " << indexRecursive << endl;
+    } else {
+        cout << "Element not found" << endl;
+    }
+    
+    // Iterative Search
+    int indexIterative = binarySearchIterative(arr, target);
+    cout << "Iterative Binary Search: ";
+    if (indexIterative != -1) {
+        cout << "Element found at index " << indexIterative << endl;
+    } else {
+        cout << "Element not found" << endl;
+    }
+    
+    return 0;
+}
