@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cmath>
+#include <stdexcept>
+using namespace std;
+
+class Triangle {
+private:
+    double a, b, c;
+
+    // Function to validate triangle sides
+    void validate() {
+        if (a <= 0 || b <= 0 || c <= 0) {
+            throw invalid_argument("All sides must be greater than zero.");
+        }
+        if (a + b <= c || a + c <= b || b + c <= a) {
+            throw invalid_argument("Sum of any two sides must be greater than the third side.");
+        }
+    }
+
+public:
+    // Constructor
+    Triangle(double side1, double side2, double side3) : a(side1), b(side2), c(side3) {
+        validate();
+    }
+
+    // Function to calculate area using Heron's formula
+    double area() {
+        double s = (a + b + c) / 2;
+        return sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+
+    // Overloaded function to calculate area of a right-angled triangle
+    static double area(double base, double height) {
+        if (base <= 0 || height <= 0) {
+            throw invalid_argument("Base and height must be greater than zero.");
+        }
+        return 0.5 * base * height;
+    }
+};
+
+int main() {
+    try {
+        double a, b, c;
+        cout << "Enter three sides of a triangle: ";
+        cin >> a >> b >> c;
+        Triangle t(a, b, c);
+        cout << "Area using Heron's formula: " << t.area() << endl;
+    } catch (const exception &e) {
+        cout << "Error: " << e.what() << endl;
+    }
+
+    try {
+        double base, height;
+        cout << "Enter base and height of a right-angled triangle: ";
+        cin >> base >> height;
+        cout << "Area using base and height: " << Triangle::area(base, height) << endl;
+    } catch (const exception &e) {
+        cout << "Error: " << e.what() << endl;
+    }
+
+    return 0;
+}
