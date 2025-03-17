@@ -1,0 +1,39 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+void removeWhitespaceAndCopy(const string &inputFile, const string &outputFile) {
+    ifstream inFile(inputFile);
+    ofstream outFile(outputFile);
+
+    if (!inFile) {
+        cerr << "Error opening input file!" << endl;
+        return;
+    }
+    if (!outFile) {
+        cerr << "Error opening output file!" << endl;
+        return;
+    }
+    
+    char ch;
+    while (inFile.get(ch)) {
+        if (!isspace(ch)) {
+            outFile.put(ch);
+        }
+    }
+    
+    cout << "File copied successfully without whitespaces!" << endl;
+    inFile.close();
+    outFile.close();
+}
+
+int main() {
+    string inputFile, outputFile;
+    cout << "Enter input file name: ";
+    cin >> inputFile;
+    cout << "Enter output file name: ";
+    cin >> outputFile;
+    
+    removeWhitespaceAndCopy(inputFile, outputFile);
+    return 0;
+}
